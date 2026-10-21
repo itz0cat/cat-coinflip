@@ -38,8 +38,10 @@ public class ChatParserTest {
         assertEquals(900L, winner.getNetProfit());
         assertEquals("WIN", winner.getLastResult());
 
-        // Check head to head
-        assertEquals(1, winner.getVsWins()); // Against local player x106_
+        // Check head to head (local player x106_ lost against winner)
+        assertEquals(0, winner.getVsWins()); // Local player wins vs this player
+        assertEquals(1, winner.getVsLosses()); // Local player losses vs this player
+        assertEquals("LOSS", winner.getVsLastResult());
 
         PlayerStats loser = statsManager.getOrCreatePlayerStats("x106_");
         assertEquals(0, loser.getWins());
