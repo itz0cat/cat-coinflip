@@ -51,28 +51,6 @@ public class ClothConfigScreen26_1_2 {
                 .setSaveConsumer(profile::setConfirmAbove)
                 .build());
 
-        general.addEntry(eb.startBooleanToggle(Component.literal("Show Watermark"), profile.isShowWatermark())
-                .setDefaultValue(false)
-                .setSaveConsumer(profile::setShowWatermark)
-                .build());
-
-        general.addEntry(eb.startSelector(Component.literal("Watermark Anchor"),
-                        new String[]{"bottom_right", "top_center_above_gui", "bottom_center"},
-                        profile.getWatermarkAnchor())
-                .setDefaultValue("bottom_right")
-                .setSaveConsumer(profile::setWatermarkAnchor)
-                .build());
-
-        general.addEntry(eb.startIntSlider(Component.literal("Watermark Scale"), profile.getWatermarkScale(), 1, 4)
-                .setDefaultValue(1)
-                .setSaveConsumer(profile::setWatermarkScale)
-                .build());
-
-        general.addEntry(eb.startFloatField(Component.literal("Watermark Opacity"), profile.getWatermarkOpacity())
-                .setDefaultValue(0.85f)
-                .setSaveConsumer(profile::setWatermarkOpacity)
-                .build());
-
         // 2. Profiles Tab
         ConfigCategory profilesCat = builder.getOrCreateCategory(Component.literal("Profiles"));
         profilesCat.addEntry(eb.startStrField(Component.literal("Active Profile"), profile.getName())
