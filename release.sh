@@ -135,7 +135,7 @@ get_version() {
     [ -f "$VERSION_FILE" ] || { err "Version file '$VERSION_FILE' not found."; exit 1; }
     case "$VERSION_FORMAT" in
         properties)
-            grep "^${VERSION_KEY}=" "$VERSION_FILE" | cut -d'=' -f2 | tr -d ' \r\n'
+            grep -E "^${VERSION_KEY}[[:space:]]*=" "$VERSION_FILE" | cut -d'=' -f2 | tr -d ' \r\n'
             ;;
         json)
             if command -v jq >/dev/null 2>&1; then
@@ -159,7 +159,7 @@ set_version() {
     local new="$1"
     case "$VERSION_FORMAT" in
         properties)
-            sed -i "s/^${VERSION_KEY}=.*/${VERSION_KEY}=${new}/" "$VERSION_FILE"
+            sed -i -E "s/^(${VERSION_KEY}[[:space:]]*=[[:space:]]*).*/\1${new}/" "$VERSION_FILE"
             ;;
         json)
             if command -v jq >/dev/null 2>&1; then
@@ -332,8 +332,10 @@ cmd_bump() {
         echo "No changes to commit."
     else
         git commit -q -m "chore: bump version to v${new_version}"
-        info "Pushing to trigger CI..."
+        git tag -f -a "v${new_version}" -m "Release v${new_version}"
+        info "Pushing commit and tag to trigger CI..."
         git push origin "$(git branch --show-current)"
+        git push origin "v${new_version}" --force
     fi
 
     # Optional local build
@@ -345,6 +347,7 @@ cmd_bump() {
     # Watch GH Actions workflow if configured
     if command -v gh >/dev/null 2>&1 && [ -n "$GH_WORKFLOW" ]; then
         info "Waiting for GitHub Actions workflow '${GH_WORKFLOW}'..."
+        sleep 5
         RUN_ID=$(gh run list --workflow="$GH_WORKFLOW" --limit 1 --json databaseId -q '.[0].databaseId' 2>/dev/null || true)
         if [ -n "$RUN_ID" ]; then
             gh run watch "$RUN_ID" || true
@@ -356,7 +359,7 @@ cmd_bump() {
     # Download release artifacts + copy to OUTPUT_DIR
     if command -v gh >/dev/null 2>&1 && [ -n "$JAR_GLOB" ]; then
         mkdir -p dist
-        gh release download "v${new_version}" --pattern "*.jar" --dir dist --clobber 2>/dev/null || true
+        gh release download "v${new_version}" --dir dist --clobber 2>/dev/null || true
         rm -f dist/*sources*.jar 2>/dev/null || true
 
         if [ -n "$OUTPUT_DIR" ] && [ -d "$OUTPUT_DIR" ]; then
@@ -365,6 +368,46 @@ cmd_bump() {
                 ok "Copied artifacts to $OUTPUT_DIR"
                 ls -la "$OUTPUT_DIR"/*.jar 2>/dev/null | tail -5
             fi
+        fi
+    fi
+
+    # Discord webhook announcement
+    if [ -n "$DISCORD_WEBHOOK" ]; then
+        info "Sending Discord release announcement to webhook..."
+        local checksum_text=""
+        if [ -f "dist/checksums.txt" ]; then
+            checksum_text="$(cat dist/checksums.txt | head -10)"
+        fi
+        local json_payload
+        json_payload=$(python3 -c "
+import json, sys
+
+ver = sys.argv[1]
+name = sys.argv[2]
+sums = sys.argv[3]
+repo = 'itz0cat/cat-coinflip'
+
+payload = {
+    'username': 'Cat Coinflip Release Bot',
+    'avatar_url': 'https://raw.githubusercontent.com/itz0cat/cat-coinflip/main/common/src/main/resources/assets/catcoinflip/icon.png',
+    'embeds': [{
+        'title': f'{name} v{ver} Released!',
+        'url': f'https://github.com/{repo}/releases/tag/v{ver}',
+        'description': f'**{name} v{ver}** is now available.\\n\\n- Fabric 1.21.11 & 26.1.2 supported\\n- Watermark removed\\n- Clean CI builds verified',
+        'color': 0x00D26A,
+        'fields': [
+            {'name': 'Versions', 'value': '1.21.11, 26.1.2', 'inline': True},
+            {'name': 'Checksums', 'value': f'\`\`\`\\n{sums}\\n\`\`\`' if sums else 'Included on GitHub Release', 'inline': False}
+        ],
+        'footer': {'text': 'Cat Coinflip | Developed by Itz0Cat'}
+    }]
+}
+print(json.dumps(payload))
+" "$new_version" "$PROJECT_NAME" "$checksum_text" 2>/dev/null || true)
+
+        if [ -n "$json_payload" ]; then
+            curl -s -H "Content-Type: application/json" -X POST -d "$json_payload" "$DISCORD_WEBHOOK" >/dev/null || warn "Failed to send Discord webhook"
+            ok "Discord webhook notification sent"
         fi
     fi
 
