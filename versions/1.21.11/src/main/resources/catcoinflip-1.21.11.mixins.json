@@ -3,8 +3,7 @@
   "package": "com.itz0cat.catcoinflip.v1_21_11.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ChatInputSuggestorMixin",
-    "HandledScreenMixin"
+    "ChatInputSuggestorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
