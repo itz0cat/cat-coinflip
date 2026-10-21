@@ -1,8 +1,5 @@
 package com.itz0cat.catcoinflip.util;
 
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -30,16 +27,24 @@ public final class BurnerCleanup {
         return os.toLowerCase(Locale.ROOT).contains("win");
     }
 
+    @SuppressWarnings("unchecked")
     public static List<Path> getModJarPaths() {
         Set<Path> paths = new LinkedHashSet<>();
 
-        // 1. FabricLoader API
+        // 1. FabricLoader API via reflection (safe for common module & unit tests)
         try {
-            Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer("catcoinflip");
-            if (modContainer.isPresent()) {
-                for (Path p : modContainer.get().getOrigin().getPaths()) {
-                    if (p != null && Files.exists(p)) {
-                        paths.add(p.toAbsolutePath());
+            Class<?> flClass = Class.forName("net.fabricmc.loader.api.FabricLoader");
+            Object flInstance = flClass.getMethod("getInstance").invoke(null);
+            Optional<?> opt = (Optional<?>) flClass.getMethod("getModContainer", String.class).invoke(flInstance, "catcoinflip");
+            if (opt != null && opt.isPresent()) {
+                Object modContainer = opt.get();
+                Object origin = modContainer.getClass().getMethod("getOrigin").invoke(modContainer);
+                List<Path> pList = (List<Path>) origin.getClass().getMethod("getPaths").invoke(origin);
+                if (pList != null) {
+                    for (Path p : pList) {
+                        if (p != null && Files.exists(p)) {
+                            paths.add(p.toAbsolutePath());
+                        }
                     }
                 }
             }
