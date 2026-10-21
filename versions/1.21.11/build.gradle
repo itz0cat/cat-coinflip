@@ -42,6 +42,7 @@ dependencies {
 }
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     inputs.property "version", rootProject.mod_version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", rootProject.loader_version
@@ -51,6 +52,10 @@ processResources {
                "minecraft_version": project.minecraft_version,
                "loader_version": rootProject.loader_version
     }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -65,6 +70,7 @@ java {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from(rootProject.file("LICENSE")) {
         rename { "${it}_${project.base.archivesName.get()}" }
     }

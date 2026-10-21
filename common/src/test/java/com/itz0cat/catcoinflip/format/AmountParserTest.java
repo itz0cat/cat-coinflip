@@ -39,7 +39,7 @@ public class AmountParserTest {
         "0.0001k",
         "1.5",
         ".75",
-        "0.001m"
+        "0.000001k"
     })
     @DisplayName("Non-whole numbers are rejected with an error")
     void testNonWholeNumbersRejected(String input) {

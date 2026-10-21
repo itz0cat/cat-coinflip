@@ -30,11 +30,13 @@ public class TooltipGenerator {
         boolean hideMissing = profile.isHideMissingData();
         boolean plainIcons = profile.isPlainTextIcons();
 
-        // Calculations
-        long netWin = Math.round(amount * (1.0 - houseCut));
-        long totalPayout = amount + netWin;
-        double payoutMultiplier = 1.0 + (1.0 - houseCut);
-        long houseCutAmt = Math.round(amount * houseCut);
+        // Coinflip Math:
+        // Total pot = 2 * amount * (1.0 - houseCut)
+        // Payout multiplier = 2.0 * (1.0 - houseCut) -> e.g. 5% cut -> 1.90x
+        double payoutMultiplier = 2.0 * (1.0 - houseCut);
+        long totalPayout = Math.round(amount * payoutMultiplier);
+        long netWin = totalPayout - amount; // Winner nets 0.9x -> +$90M
+        long houseCutAmt = Math.round(amount * 2.0 * houseCut); // 10% of bet = 5% of pot
 
         double riskPercent = (userBalance > 0) ? (((double) amount / userBalance) * 100.0) : -1.0;
         boolean canAfford = (userBalance >= 0) && (userBalance >= amount);
@@ -44,7 +46,7 @@ public class TooltipGenerator {
         long balAfterLoss = (userBalance >= 0) ? (userBalance - amount) : -1L;
         long lossesToBroke = (userBalance > 0 && amount > 0) ? (userBalance / amount) : -1L;
 
-        // EV = 0.5 * netWin - 0.5 * amount
+        // EV = 0.5 * netWin - 0.5 * amount = -0.5 * houseCutAmt
         long ev = Math.round(0.5 * netWin - 0.5 * amount);
         double breakevenRate = (1.0 / payoutMultiplier) * 100.0;
 

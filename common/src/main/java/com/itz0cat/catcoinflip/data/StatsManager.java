@@ -42,9 +42,9 @@ public class StatsManager {
 
     public synchronized void recordGameSummary(String winner, String loser, long potAmount, double houseCut, String localPlayerName) {
         // Full pot was shown in message (e.g. $190 or $1,900)
-        // Base listing bet = pot / (1.0 + (1.0 - houseCut))
-        // Winner net profit = pot - baseBet
-        double multiplier = 1.0 + (1.0 - houseCut);
+        // Coinflip pot = 2 * baseBet * (1.0 - houseCut)
+        // Multiplier = 2.0 * (1.0 - houseCut)
+        double multiplier = 2.0 * (1.0 - houseCut);
         long baseBet = (multiplier > 0) ? Math.round(potAmount / multiplier) : (potAmount / 2);
         long winnerNet = potAmount - baseBet;
 

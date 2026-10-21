@@ -43,10 +43,10 @@ public class TooltipGeneratorTest {
         assertTrue(result.stream().anyMatch(l -> l.contains("$100M")));
         // Verify Payout (1.90x ($190M))
         assertTrue(result.stream().anyMatch(l -> l.contains("1.90x") && l.contains("$190M")));
-        // Verify House Cut (5.0% ($5M))
-        assertTrue(result.stream().anyMatch(l -> l.contains("5.0%") && l.contains("$5M")));
-        // Verify Profit on Win (+$95M)
-        assertTrue(result.stream().anyMatch(l -> l.contains("+$95M")));
+        // Verify House Cut (5.0% ($10M))
+        assertTrue(result.stream().anyMatch(l -> l.contains("5.0%") && l.contains("$10M")));
+        // Verify Profit on Win (+$90M)
+        assertTrue(result.stream().anyMatch(l -> l.contains("+$90M")));
         // Verify High Roller tag
         assertTrue(result.stream().anyMatch(l -> l.contains("HIGH ROLLER")));
     }

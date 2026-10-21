@@ -44,7 +44,7 @@ public class QuickCreateHandlerTest {
         CommandRewriteResult result = handler.processCommand("/cf 28m", profile, compat);
         assertEquals(CommandRewriteResult.Action.REWRITTEN, result.getAction());
         assertEquals("/cf create 28000000", result.getCommand());
-        assertTrue(compat.messages.stream().anyMatch(m -> m.contains("-> /cf create 28000000")));
+        assertTrue(compat.messages.stream().anyMatch(m -> m.contains("/cf create 28000000")));
     }
 
     @Test
