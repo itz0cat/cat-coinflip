@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "catcoinflip",
+  "version": "${version}",
+  "name": "Cat Coinflip",
+  "description": "Cat Coinflip: see exactly what a coinflip is worth before you click. Win rate, profit and loss, risk, rank and more, right in the tooltip, plus /cf 28m quick create. Fully configurable, with profiles per server, remote default updates and a built-in updater. 100% free. No automation. By Itz0Cat.",
+  "authors": [
+    "Itz0Cat"
+  ],
+  "contact": {
+    "homepage": "https://itz0cat.vercel.app",
+    "sources": "https://github.com/itz0cat/cat-coinflip",
+    "issues": "https://github.com/itz0cat/cat-coinflip/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/catcoinflip/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.itz0cat.catcoinflip.v1_21_11.CatCoinflip1_21_11"
+    ],
+    "modmenu": [
+      "com.itz0cat.catcoinflip.v1_21_11.modmenu.ModMenuCompat1_21_11"
+    ]
+  },
+  "mixins": [
+    "catcoinflip-1.21.11.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "1.21.11",
+    "java": ">=21",
+    "fabric-api": "*",
+    "cloth-config": ">=15.0.0"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "free"
+      ],
+      "links": {
+        "modmenu.discord": "https://dsc.gg/itz0cat",
+        "modmenu.homepage": "https://itz0cat.vercel.app"
+      }
+    }
+  }
+}

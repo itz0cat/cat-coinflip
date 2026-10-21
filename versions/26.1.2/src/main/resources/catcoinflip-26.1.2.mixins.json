@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.itz0cat.catcoinflip.v26_1_2.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "CommandSuggestionsMixin",
+    "AbstractContainerScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

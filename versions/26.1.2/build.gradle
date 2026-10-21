@@ -1,0 +1,73 @@
+plugins {
+    id 'net.fabricmc.fabric-loom'
+    id 'maven-publish'
+}
+
+base {
+    archivesName = "${rootProject.archives_base_name}"
+}
+version = "${rootProject.mod_version}+mc${project.minecraft_version}"
+
+sourceSets {
+    main {
+        java {
+            srcDirs += rootProject.file('common/src/main/java')
+        }
+        resources {
+            srcDirs += rootProject.file('common/src/main/resources')
+        }
+    }
+    test {
+        java {
+            srcDirs += rootProject.file('common/src/test/java')
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+    inputs.property "version", rootProject.mod_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "loader_version", rootProject.loader_version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": rootProject.mod_version,
+               "minecraft_version": project.minecraft_version,
+               "loader_version": rootProject.loader_version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+    it.options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    from(rootProject.file("LICENSE")) {
+        rename { "${it}_${project.base.archivesName.get()}" }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "configVersion": 1,
+  "checkForUpdates": true,
+  "autoDownload": false,
+  "activeProfile": "BananaSMP",
+  "shortNumbersFrom": 100000,
+  "plainTextIcons": false,
+  "hideMissingData": false,
+  "showWatermark": false,
+  "watermarkAnchor": "bottom_right",
+  "watermarkScale": 1,
+  "watermarkOpacity": 0.85,
+  "watermarkUseSignature": true,
+  "tooltipEnabled": true,
+  "profiles": [
+    {
+      "name": "BananaSMP",
+      "serverAddressPatterns": [
+        ".*bananasmp\\.net.*",
+        ".*banana\\.rip.*"
+      ],
+      "guiTitleRegex": "Coinflip \\| Menu",
+      "watermarkScreens": [
+        "Coinflip \\| Menu"
+      ],
+      "watermarkUseSignature": true,
+      "watermarkAnchor": "bottom_right",
+      "watermarkScale": 1,
+      "watermarkOpacity": 0.85,
+      "showWatermark": false,
+      "houseCut": 0.05,
+      "minBet": 100,
+      "currencySymbol": "$",
+      "commandAliases": [
+        "cf",
+        "coinflip"
+      ],
+      "quickCreate": true,
+      "quickCreateTemplate": "{alias} create {amount}",
+      "echoExpansion": true,
+      "confirmAbove": 0,
+      "chatRegexes": {
+        "gameSummary": "GAME SUMMARY",
+        "winner": "● Winner:\\s*(\\w+)",
+        "loser": "● Loser:\\s*(\\w+)",
+        "amountBet": "● Amount Bet:\\s*\\$([0-9,]+)",
+        "balance": "Your Balance:\\s*\\$([0-9,]+(?:\\.[0-9]{2})?)",
+        "create": "COINFLIP ▶ Created Coinflip game for ([0-9,]+)",
+        "createRejected": "The minimum bet is \\$([0-9,]+) for a coinflip!"
+      },
+      "lines": [
+        { "id": "amount_short", "label": "Amount", "color": "§e", "icon": "★", "enabled": true },
+        { "id": "payout", "label": "Payout", "color": "§a", "icon": "✔", "enabled": true },
+        { "id": "house_cut", "label": "House Cut", "color": "§c", "icon": "⚡", "enabled": true },
+        { "id": "if_win", "label": "Profit on Win", "color": "§2", "icon": "↗", "enabled": true },
+        { "id": "if_lose", "label": "Loss on Fail", "color": "§4", "icon": "↘", "enabled": true },
+        { "id": "risk", "label": "Risk %", "color": "§6", "icon": "⚠", "enabled": true },
+        { "id": "can_afford", "label": "Affordable", "color": "§b", "icon": "✔", "enabled": true },
+        { "id": "shortfall", "label": "Shortfall", "color": "§c", "icon": "✘", "enabled": false },
+        { "id": "balance_after_win", "label": "Bal After Win", "color": "§a", "icon": "★", "enabled": false },
+        { "id": "balance_after_loss", "label": "Bal After Loss", "color": "§c", "icon": "★", "enabled": false },
+        { "id": "losses_to_broke", "label": "Losses to Broke", "color": "§7", "icon": "⌛", "enabled": false },
+        { "id": "ev", "label": "Expected Value", "color": "§e", "icon": "⚔", "enabled": true },
+        { "id": "breakeven_rate", "label": "Breakeven Rate", "color": "§d", "icon": "⚅", "enabled": true },
+        { "id": "win_rate", "label": "Opponent Winrate", "color": "§b", "icon": "♛", "enabled": true },
+        { "id": "record", "label": "Opponent Record", "color": "§f", "icon": "⚔", "enabled": true },
+        { "id": "games_seen", "label": "Games Seen", "color": "§7", "icon": "⌛", "enabled": true },
+        { "id": "streak", "label": "Streak", "color": "§e", "icon": "⚡", "enabled": true },
+        { "id": "last_result", "label": "Last Result", "color": "§f", "icon": "♥", "enabled": false },
+        { "id": "total_wagered", "label": "Total Wagered", "color": "§6", "icon": "★", "enabled": false },
+        { "id": "biggest_bet", "label": "Biggest Bet", "color": "§c", "icon": "▲", "enabled": false },
+        { "id": "avg_bet", "label": "Avg Bet", "color": "§7", "icon": "★", "enabled": false },
+        { "id": "net_profit", "label": "Opponent Profit", "color": "§a", "icon": "✔", "enabled": false },
+        { "id": "last_seen", "label": "Last Seen", "color": "§7", "icon": "⌛", "enabled": false },
+        { "id": "vs_record", "label": "VS Record", "color": "§d", "icon": "⚔", "enabled": true },
+        { "id": "vs_profit", "label": "VS Profit", "color": "§a", "icon": "★", "enabled": true },
+        { "id": "vs_last_result", "label": "VS Last Result", "color": "§f", "icon": "♥", "enabled": false },
+        { "id": "rank", "label": "Rank", "color": "§e", "icon": "♛", "enabled": false },
+        { "id": "page_pos", "label": "Slot Pos", "color": "§8", "icon": "▲", "enabled": false },
+        { "id": "size_vs_avg", "label": "Size vs Avg", "color": "§b", "icon": "▲", "enabled": false },
+        { "id": "listing_age", "label": "Listing Age", "color": "§7", "icon": "⌛", "enabled": false },
+        { "id": "total_listings", "label": "Total Listings", "color": "§7", "icon": "★", "enabled": false },
+        { "id": "whale_tag", "label": "Tag", "color": "§d", "icon": "♛", "enabled": true },
+        { "id": "session_profit", "label": "Session Profit", "color": "§a", "icon": "★", "enabled": true },
+        { "id": "session_wl", "label": "Session W/L", "color": "§f", "icon": "⚔", "enabled": true },
+        { "id": "session_winrate", "label": "Session Winrate", "color": "§b", "icon": "♛", "enabled": true },
+        { "id": "my_streak", "label": "My Streak", "color": "§e", "icon": "⚡", "enabled": true },
+        { "id": "best_streak", "label": "Best Streak", "color": "§2", "icon": "▲", "enabled": false },
+        { "id": "worst_streak", "label": "Worst Streak", "color": "§4", "icon": "▼", "enabled": false },
+        { "id": "biggest_win", "label": "Biggest Win", "color": "§a", "icon": "▲", "enabled": false },
+        { "id": "biggest_loss", "label": "Biggest Loss", "color": "§c", "icon": "▼", "enabled": false },
+        { "id": "games_per_hour", "label": "Games/Hr", "color": "§7", "icon": "⌛", "enabled": false },
+        { "id": "profit_per_hour", "label": "Profit/Hr", "color": "§2", "icon": "↗", "enabled": false },
+        { "id": "risk_bar", "label": "Risk Meter", "color": "§e", "icon": "█", "enabled": true }
+      ]
+    },
+    {
+      "name": "Generic",
+      "serverAddressPatterns": [
+        ".*"
+      ],
+      "guiTitleRegex": "(?i).*coinflip.*",
+      "watermarkScreens": [
+        "(?i).*coinflip.*"
+      ],
+      "watermarkUseSignature": false,
+      "watermarkAnchor": "bottom_right",
+      "watermarkScale": 1,
+      "watermarkOpacity": 0.85,
+      "showWatermark": false,
+      "houseCut": 0.05,
+      "minBet": 100,
+      "currencySymbol": "$",
+      "commandAliases": [
+        "cf",
+        "coinflip"
+      ],
+      "quickCreate": true,
+      "quickCreateTemplate": "{alias} create {amount}",
+      "echoExpansion": true,
+      "confirmAbove": 0,
+      "chatRegexes": {
+        "gameSummary": "(?i)game summary",
+        "winner": "(?i)winner:\\s*(\\w+)",
+        "loser": "(?i)loser:\\s*(\\w+)",
+        "amountBet": "(?i)amount(?: bet)?:\\s*\\$?([0-9,]+)",
+        "balance": "(?i)balance:\\s*\\$?([0-9,]+(?:\\.[0-9]{2})?)",
+        "create": "(?i)created coinflip.*?for ([0-9,]+)",
+        "createRejected": "(?i)minimum bet is \\$?([0-9,]+)"
+      },
+      "lines": [
+        { "id": "amount_short", "label": "Amount", "color": "§e", "icon": "★", "enabled": true },
+        { "id": "payout", "label": "Payout", "color": "§a", "icon": "✔", "enabled": true },
+        { "id": "house_cut", "label": "House Cut", "color": "§c", "icon": "⚡", "enabled": true },
+        { "id": "if_win", "label": "Profit on Win", "color": "§2", "icon": "↗", "enabled": true },
+        { "id": "if_lose", "label": "Loss on Fail", "color": "§4", "icon": "↘", "enabled": true },
+        { "id": "risk", "label": "Risk %", "color": "§6", "icon": "⚠", "enabled": true },
+        { "id": "can_afford", "label": "Affordable", "color": "§b", "icon": "✔", "enabled": true },
+        { "id": "ev", "label": "Expected Value", "color": "§e", "icon": "⚔", "enabled": true },
+        { "id": "win_rate", "label": "Opponent Winrate", "color": "§b", "icon": "♛", "enabled": true },
+        { "id": "record", "label": "Opponent Record", "color": "§f", "icon": "⚔", "enabled": true },
+        { "id": "streak", "label": "Streak", "color": "§e", "icon": "⚡", "enabled": true },
+        { "id": "session_profit", "label": "Session Profit", "color": "§a", "icon": "★", "enabled": true },
+        { "id": "session_wl", "label": "Session W/L", "color": "§f", "icon": "⚔", "enabled": true },
+        { "id": "risk_bar", "label": "Risk Meter", "color": "§e", "icon": "█", "enabled": true }
+      ]
+    }
+  ]
+}
