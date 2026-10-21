@@ -95,7 +95,7 @@ apply_type_defaults() {
             VERSION_KEY="${VERSION_KEY:-mod_version}"
             VERSION_FORMAT="${VERSION_FORMAT:-properties}"
             JAR_GLOB="${JAR_GLOB:-build/libs/*.jar}"
-            BUILD_CMD="${BUILD_CMD:-./gradlew build}"
+            BUILD_CMD="${BUILD_CMD-}"
             GH_WORKFLOW="${GH_WORKFLOW:-Build ${PROJECT_NAME}}"
             ;;
         node)
@@ -339,7 +339,7 @@ cmd_bump() {
     fi
 
     # Optional local build
-    if [ -n "$BUILD_CMD" ]; then
+    if [ -n "$BUILD_CMD" ] && [ "$BUILD_CMD" != "none" ] && [ "$BUILD_CMD" != "skip" ]; then
         info "Building locally: $BUILD_CMD"
         eval "$BUILD_CMD" || warn "Local build command failed/skipped"
     fi
